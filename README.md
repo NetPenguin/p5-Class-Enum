@@ -4,11 +4,15 @@ Class::Enum - typed enum
 
 # SYNOPSIS
 
-Simple usage.
+## Simple usage.
+
+Define \`Direction\`,
 
     # Direction.pm
     package Direction;
     use Class::Enum qw(Left Right);
+
+and using.
 
     # using
     use Direction qw(Left Right);
@@ -43,7 +47,9 @@ Simple usage.
     # type
     print ref Left; # 'Direction'
 
-Extended usage.
+## Extended usage.
+
+Define \`Direction\`,
 
     # Direction.pm
     package Direction;
@@ -58,13 +64,40 @@ Extended usage.
         return $pos + $self->delta;
     }
 
+and using.
+
     # using
     use Direction qw(Left Right);
     
 
     my $pos = 5;
-    my $left_pos = Left->move($pos);   # $left_pos is 4
-    my $right_pos = Right->move($pos); # $right_post is 6
+    print Left->move($pos);  # 4
+    print Right->move($pos); # 6
+
+## Override default properties.
+
+Define \`Direction\`,
+
+    # Direction.pm
+    package Direction;
+    use Class::Enum (
+        Left  => { ordinal => -1, name => 'L' },
+        Right => { ordinal =>  1, name => 'R' },
+    );
+
+and using.
+
+    # using
+    use Direction qw(Left Right);
+    
+
+    my $pos = 5;
+    print $pos + Left;  # 4
+    print $pos + Right; # 6
+    
+
+    print 'Left is '  . Left;  # 'Left is L'
+    print 'Right is ' . Right; # 'Right is R'
 
 # DESCRIPTION
 
