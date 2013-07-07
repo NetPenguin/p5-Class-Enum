@@ -13,10 +13,16 @@ BEGIN {
 # ----
 # Tests.
 subtest 'default properties' => sub {
-    is(Left->name, 'Left', 'Left->name');
+    is(Left ->name, 'Left' , 'Left ->name');
     is(Right->name, 'Right', 'Right->name');
-    is(Left->ordinal, 0, 'Left->ordinal');
+
+    is(Left ->ordinal, 0, 'Left ->ordinal');
     is(Right->ordinal, 1, 'Right->ordinal');
+
+    is(Left ->is_left ,  1, 'Left ->is_left');
+    is(Left ->is_right, '', 'Left ->is_right');
+    is(Right->is_left , '', 'Right->is_left');
+    is(Right->is_right,  1, 'Right->is_right');
 };
 
 subtest 'compare with ordinal' => sub {
@@ -54,6 +60,11 @@ subtest 'compare with ordinal' => sub {
     is(Right != Right, '', 'Right != Right');
 };
 
+subtest 'evaluate as string' => sub {
+};
+
+subtest 'evaluate as number' => sub {
+};
 
 # ----
 done_testing;
