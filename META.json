@@ -44,6 +44,8 @@
          "requires" : {
             "Carp" : "0",
             "Data::Util" : "0",
+            "Exporter" : "0",
+            "String::CamelCase" : "0",
             "perl" : "5.008005"
          }
       },
