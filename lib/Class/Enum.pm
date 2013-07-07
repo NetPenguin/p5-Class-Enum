@@ -26,26 +26,33 @@ and using.
     # using
     use Direction qw(Left Right);
     
-    # compare with ordinal
-    print Left <=> Right; # -1
-    print Left == Right;  # ''
-    print Left != Right;  # 1
-    print Left <= Right;  # 1
+    # compare by ordinal
+    print Left() <=> Right; # -1
+    print Left() <   Right; # 1
+    print Left() <=  Right; # 1
+    print Left() >   Right; # ''
+    print Left() >=  Right; # ''
+    print Left() ==  Right; # ''
+    print Left() !=  Right; # 1
     
-    # compare with name
-    print Left cmp Right; # -1
-    print Left eq Right;  # ''
-    print Left ne Right;  # 1
+    # compare by name
+    print Left() cmp Right; # -1
+    print Left() lt  Right; # 1
+    print Left() le  Right; # 1
+    print Left() gt  Right; # ''
+    print Left() ge  Right; # ''
+    print Left() eq  Right; # ''
+    print Left() ne  Right; # 1
     
     # list values
-    print join("\n",                                                     # '0: Left
-               map { $_->ordinal . ': ' . $_->name } Direction->values); #  1: Right'
+    print join("\n",                                                 # '0: Left
+               map { sprintf('%d: %s', $_, $_) } Direction->values); #  1: Right'
     
     # list names
     print join(', ', Direction->names); # 'Left, Right'
     
     # retrieve value of name
-    print Left == Direction->value_of('Left'); # 1
+    print Left() == Direction->value_of('Left'); # 1
     
     # type
     print ref Left; # 'Direction'
