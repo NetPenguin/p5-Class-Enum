@@ -112,6 +112,7 @@ use Data::Util qw(
     is_hash_ref
     is_string
 );
+use Exporter qw();
 use String::CamelCase qw(
     decamelize
 );
@@ -161,6 +162,16 @@ sub __prepare {
     );
 
     # install exporter.
+    install_subroutine(
+        $package,
+        import => \&Exporter::import,
+    );
+    my $exportables = [];
+    {
+        no strict 'refs';
+        *{$package . '::EXPORT_OK'} = $exportables;
+        *{$package . '::EXPORT_TAGS'} = {all => $exportables};
+    }
 
     # install class methods.
     install_subroutine(
@@ -176,10 +187,11 @@ sub __prepare {
         properties => {},
         identifiers => {},
         next_ordinal => 0,
+        exportables => $exportables,
     };
 }
 
-# for overload
+# installed for overload method.
 sub __nil {}
 sub __ufo_operator {
     my ($lhs, $rhs) = @_;
@@ -204,7 +216,7 @@ sub __numeric_conversion {
     return $self->ordinal;
 }
 
-# for class method.
+# installed for class method.
 sub __value_of {
     my ($class, $name) = @_;
     return $definition_of{$class}->{value_of}->{$name};
@@ -271,6 +283,7 @@ sub __define {
         $identifier => $instance_accessor,
     );
     $identifiers->{$identifier} = $instance_accessor;
+    push @{$definition->{exportables}}, $identifier;
 
     # install is_* methods.
     install_subroutine(
