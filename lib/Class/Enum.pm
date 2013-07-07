@@ -57,7 +57,7 @@ and using.
     # type
     print ref Left; # 'Direction'
 
-=head2 Extended usage.
+=head2 Advanced usage.
 
 Define `Direction`,
 
@@ -82,28 +82,31 @@ and using.
     print Left->move($pos);  # 4
     print Right->move($pos); # 6
 
-=head2 Override default properties.
+=head2 Override default properties. (Unrecommended)
 
 Define `Direction`,
 
     # Direction.pm
     package Direction;
     use Class::Enum (
-        Left  => { ordinal => -1, name => 'L' },
-        Right => { ordinal =>  1, name => 'R' },
+        Left   => { name => 'L', ordinal => -1 },
+        Center => { name => 'C' }
+        Right  => { name => 'R' },
     );
 
 and using.
 
     # using
-    use Direction qw(Left Right);
+    use Direction qw(Left Center Right);
     
     my $pos = 5;
-    print $pos + int(Left);  # 4
-    print $pos + int(Right); # 6
+    print $pos + int(Left);   # 4
+    print $pos + int(Center); # 5
+    print $pos + int(Right);  # 6
     
-    print 'Left is '  . Left;  # 'Left is L'
-    print 'Right is ' . Right; # 'Right is R'
+    print 'Left is '   . Left;   # 'Left is L'
+    print 'Center is ' . Center; # 'Center is C'
+    print 'Right is '  . Right;  # 'Right is R'
 
 =head1 DESCRIPTION
 
