@@ -26,6 +26,17 @@ and using.
     # using
     use Direction qw(Left Right);
     
+    # default properties
+    print Left ->name; # 'Left'
+    print Right->name; # 'Right
+    print Left ->ordinal; # 0
+    print Right->ordinal; # 1
+    
+    print Left ->is_left;  # 1
+    print Left ->is_right; # ''
+    print Right->is_left;  # ''
+    print Right->is_right; # 1
+    
     # compare by ordinal
     print Left() <=> Right; # -1
     print Left() <   Right; # 1
