@@ -113,6 +113,7 @@ and using.
 Class::Enum provides behaviors of typed enum, such as a Typesafe enum in java.
 
 =cut
+use overload;
 use Carp qw(
     carp
     croak
@@ -162,13 +163,11 @@ sub __prepare {
     return $definition_of{$package} if exists $definition_of{$package};
 
     # install overload.
-    install_subroutine(
-        $package,
-        '((' => \&__nil,
-        '(<=>' => \&__ufo_operator,
-        '(cmp' => \&__cmp_operator,
-        '(""' => \&__string_conversion,
-        '(0+' => \&__numeric_conversion,
+    $package->overload::OVERLOAD(
+        '<=>' => \&__ufo_operator,
+        'cmp' => \&__cmp_operator,
+        '""' => \&__string_conversion,
+        '0+' => \&__numeric_conversion,
     );
 
     # install exporter.
@@ -202,7 +201,6 @@ sub __prepare {
 }
 
 # installed for overload method.
-sub __nil {}
 sub __ufo_operator {
     my ($lhs, $rhs) = @_;
     carp('Use of uninitialized value in overloaded numeric comparison '.
