@@ -2,6 +2,11 @@ Revision history for Perl extension Class-Enum
 
 {{$NEXT}}
 
+0.02 2013-07-10T10:26:54Z
+
+    * Modify POD, add `is_*` method.
+    * Bug fix, failed overloading string("") and numeric(0+) conversion under perl 5.16.3 or older.
+
 0.01 2013-07-07T17:36:05Z
 
     * Initial release.
