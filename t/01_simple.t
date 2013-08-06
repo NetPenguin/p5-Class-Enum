@@ -110,6 +110,8 @@ subtest 'class methods' => sub {
     is_deeply([$class->names], [qw(Left Right)], 'names');
     is($class->value_of('Left'), Left, q{value_of('Left')});
     is($class->value_of('Right'), Right, q{value_of('Right')});
+    is($class->from_ordinal(0), Left, q{from_ordinal(0)});
+    is($class->from_ordinal(1), Right, q{from_ordinal(1)});
 };
 
 subtest 'ref type' => sub {
