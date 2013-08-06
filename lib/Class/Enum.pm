@@ -261,10 +261,8 @@ sub __names {
 }
 sub __from_ordinal {
     my ($class, $ordinal) = @_;
-    my $definition = $definition_of{$class};
-    my $from_ordinal = $definition->{from_ordinal} ||= {
-        map { ($_->ordinal, $_) } values %{$definition->{value_of}}
-    };
+    my $from_ordinal = $definition_of{$class}->{from_ordinal}
+                       ||= {map { ($_->ordinal, $_) } __values($class)};
     return $from_ordinal->{$ordinal};
 }
 
