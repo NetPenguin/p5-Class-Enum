@@ -64,6 +64,9 @@ and using.
     
     # retrieve value of name
     print Left() == Direction->value_of('Left'); # 1
+
+    # retrieve value of ordinal
+    print Left() == Direction->from_ordinal(0); # 1
     
     # type
     print ref Left; # 'Direction'
@@ -199,6 +202,7 @@ sub __prepare {
         value_of => \&__value_of,
         values => \&__values,
         names => \&__names,
+        from_ordinal => \&__from_ordinal,
     );
 
     # create initial definition.
@@ -254,6 +258,14 @@ sub __names {
     my $names = $definition_of{$class}->{names}
                 ||= [map { $_->name } __values($class)];
     return @$names;
+}
+sub __from_ordinal {
+    my ($class, $ordinal) = @_;
+    my $definition = $definition_of{$class};
+    my $from_ordinal = $definition->{from_ordinal} ||= {
+        map { ($_->ordinal, $_) } values %{$definition->{value_of}}
+    };
+    return $from_ordinal->{$ordinal};
 }
 
 # define instance.
