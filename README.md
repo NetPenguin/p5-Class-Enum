@@ -62,6 +62,9 @@ and using.
 
     # retrieve value of name
     print Left() == Direction->value_of('Left'); # 1
+
+    # retrieve value of ordinal
+    print Left() == Direction->from_ordinal(0); # 1
     
 
     # type
