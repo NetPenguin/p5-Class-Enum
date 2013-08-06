@@ -2,6 +2,8 @@ Revision history for Perl extension Class-Enum
 
 {{$NEXT}}
 
+0.03 2013-08-06T22:50:35Z
+
     * Add `from_ordinal` class method.(Kulag++)
 
 0.02 2013-07-10T10:26:54Z
