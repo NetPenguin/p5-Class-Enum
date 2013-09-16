@@ -125,6 +125,25 @@ and using.
     print 'Center is ' . Center; # 'Center is C'
     print 'Right is '  . Right;  # 'Right is R'
 
+## Use alternate exporter.
+
+Define \`Direction\`,
+
+    # Direction.pm
+    package Direction;
+    use Class::Enum qw(Left Right), -install_exporter => 0; # No install 'Exporter'
+    use parent 'Exporter::Tiny';
+    our @EXPORT_OK = __PACKAGE__->names();
+
+and using.
+
+    # using
+    use Direction Left  => { -as => 'L' },
+                  Right => { -as => 'R' };
+
+    print L->name; # 'Left'
+    print R->name; # 'Right
+
 # DESCRIPTION
 
 Class::Enum provides behaviors of typed enum, such as a Typesafe enum in java.
