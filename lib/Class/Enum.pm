@@ -162,6 +162,8 @@ use String::CamelCase qw(
     decamelize
 );
 
+$Carp::Internal{ (__PACKAGE__) }++;
+
 sub import {
     my $class = shift;
     my ($package) = caller(0);
@@ -173,7 +175,6 @@ sub import {
 my $options_rule = Data::Validator->new(
     '-install_exporter' => { isa => 'Bool', default => 1 },
 )->with('Croak');
-
 sub __read_import_parameters {
     my @values;
     my @options;
@@ -188,7 +189,6 @@ sub __read_import_parameters {
 
         # identifier and properties.
         unless (is_string($key)) {
-            local $Carp::CarpLevel += 1;
             croak('requires NAME* or (NAME => PROPERTIES)* parameters at \'use Class::Enum\', ' .
                   'NAME is string, PROPERTIES is hashref. ' .
                   '(e.g. \'use Class::Enum qw(Left Right)\' ' .
@@ -303,7 +303,6 @@ sub __from_ordinal {
 # define instance.
 sub __define {
     my ($package, $definition, $parameter) = @_;
-    local $Carp::CarpLevel += 1;
 
     # create instance.
     my $value = bless {
