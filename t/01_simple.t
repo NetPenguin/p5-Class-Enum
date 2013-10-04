@@ -95,13 +95,13 @@ subtest 'compare by name' => sub {
     is(Right() ne Right, '', 'Right ne Right');
 };
 
-subtest 'evaluate as string' => sub {
-    is(int(Left) , 0, 'int(Left)');
-    is(int(Right), 1, 'int(Right)');
+subtest 'evaluate as numeric' => sub {
+    is(0+Left , 0, '0+Left');
+    is(0+Right, 1, '0+Right');
 };
 
-subtest 'evaluate as numeric' => sub {
-    is(''.Left, 'Left', q{''.Left});
+subtest 'evaluate as string' => sub {
+    is(''.Left , 'Left', q{''.Left});
     is(''.Right, 'Right', q{''.Right});
 };
 
