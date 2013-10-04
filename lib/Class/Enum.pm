@@ -114,9 +114,9 @@ and using.
     use Direction qw(Left Center Right);
     
     my $pos = 5;
-    print $pos + int(Left);   # 4
-    print $pos + int(Center); # 5
-    print $pos + int(Right);  # 6
+    print $pos + Left;   # 4
+    print $pos + Center; # 5
+    print $pos + Right;  # 6
     
     print 'Left is '   . Left;   # 'Left is L'
     print 'Center is ' . Center; # 'Center is C'
@@ -216,6 +216,7 @@ sub __prepare {
         'cmp' => \&__cmp_operator,
         '""' => \&__string_conversion,
         '0+' => \&__numeric_conversion,
+        fallback => 1,
     );
 
     # install exporter.
