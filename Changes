@@ -2,6 +2,8 @@ Revision history for Perl extension Class-Enum
 
 {{$NEXT}}
 
+0.05 2013-10-05T08:44:04Z
+
     - Fix default overload settings
     - Add `-overload` option
 

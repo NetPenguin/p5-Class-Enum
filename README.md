@@ -116,14 +116,29 @@ and using.
     
 
     my $pos = 5;
-    print $pos + int(Left);   # 4
-    print $pos + int(Center); # 5
-    print $pos + int(Right);  # 6
+    print $pos + Left;   # 4
+    print $pos + Center; # 5
+    print $pos + Right;  # 6
     
 
     print 'Left is '   . Left;   # 'Left is L'
     print 'Center is ' . Center; # 'Center is C'
     print 'Right is '  . Right;  # 'Right is R'
+
+## Override overload
+
+Define \`Direction\`,
+
+    # Direction.pm
+    package Direction;
+    use Class::Enum qw(Left Right), -overload => { '""' => sub { $_[0]->ordinal } };
+
+and using.
+
+    # using
+    use Direction qw(Left Right);
+    print 'Left is '  . Left;  # 'Left is 0'
+    print 'Right is ' . Right; # 'Right is 1'
 
 ## Use alternate exporter.
 
