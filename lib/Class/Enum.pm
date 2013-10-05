@@ -122,6 +122,21 @@ and using.
     print 'Center is ' . Center; # 'Center is C'
     print 'Right is '  . Right;  # 'Right is R'
 
+=head2 Override overload
+
+Define `Direction`,
+
+    # Direction.pm
+    package Direction;
+    use Class::Enum qw(Left Right), -overload => { '""' => sub { $_[0]->ordinal } };
+
+and using.
+
+    # using
+    use Direction qw(Left Right);
+    print 'Left is '  . Left;  # 'Left is 0'
+    print 'Right is ' . Right; # 'Right is 1'
+
 =head2 Use alternate exporter.
 
 Define `Direction`,
