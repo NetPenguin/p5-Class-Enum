@@ -173,7 +173,8 @@ sub import {
 }
 
 my $options_rule = Data::Validator->new(
-    '-install_exporter' => { isa => 'Bool', default => 1 },
+    '-install_exporter' => { isa => 'Bool'         , default => 1  },
+    '-overload'         => { isa => 'HashRef|Undef', default => {} },
 )->with('Croak');
 sub __read_import_parameters {
     my @values;
@@ -211,17 +212,26 @@ sub __prepare {
     return $definition_of{$package} if exists $definition_of{$package};
 
     # install overload.
-    $package->overload::OVERLOAD(
-        '<=>' => \&__ufo_operator,
-        'cmp' => \&__cmp_operator,
-        '""' => \&__string_conversion,
-        '0+' => \&__numeric_conversion,
-        fallback => 1,
-    );
+    if ($options->{-overload}) {
+        my %overload = (
+            '<=>' => \&__ufo_operator,
+            'cmp' => \&__cmp_operator,
+            '""' => \&__string_conversion,
+            '0+' => \&__numeric_conversion,
+            fallback => 1,
+            %{$options->{-overload}},
+        );
+
+        $package->overload::OVERLOAD(
+            map  { $_ => $overload{$_} }
+            grep { $_ eq 'fallback' || defined $overload{$_} }
+                 keys(%overload)
+        );
+    }
 
     # install exporter.
     my $exportables = [];
-    if ($options->{'-install_exporter'}) {
+    if ($options->{-install_exporter}) {
         install_subroutine(
             $package,
             import => \&Exporter::import,
