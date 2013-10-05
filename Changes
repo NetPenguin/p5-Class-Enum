@@ -2,6 +2,9 @@ Revision history for Perl extension Class-Enum
 
 {{$NEXT}}
 
+    - Fix default overload settings
+    - Add `-overload` option
+
 0.04 2013-09-16T13:25:48Z
 
     - Use `%Carp::Internal` instead of `$Carp::CarpLevel`.
